@@ -5,30 +5,34 @@
  * Author: M.aviv S.
  * email : avivblues@gmail.com
  */
+ //https://gist.github.com/tony-landis/31464
 if(defined('__NOT_DIRECT')){
     /*
         not authorized for direct access file
     */
     die('not authorized action!!');
 }
-class sdb 
+class spdo 
 {  
     /**
      * The singleton instance
      * 
      */
-    static private $PDOInstance; 
+    static private $_instance; 
      
-  	public function __construct($dsn, $username=false, $password=false, $driver_options=false) 
+  	public function __construct() 
     {
-        if(!self::$PDOInstance) { 
+        if(!self::$_instance) { 
 	        try {
-			   self::$PDOInstance = new PDO($dsn, $username, $password, $driver_options);
+                $cnfg = parse_ini_file("config/dbconfig.ini");
+                $dns = $cnfg['engine'].':host='.$cnfg['host'].';dbname='.$cnfg['database'];
+			    self::$_instance = new PDO($dns,$cnfg['user'],$cnfg['pass']); 
+                self::$_instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			} catch (PDOException $e) { 
 			   die("PDO CONNECTION ERROR: " . $e->getMessage() . "<br/>");
 			}
     	}
-      	return self::$PDOInstance;    	    	
+      	return self::$_instance;    	    	
     }
 	 
   	/**
@@ -37,7 +41,7 @@ class sdb
   	 * @return bool
   	 */
 	public function beginTransaction() {
-		return self::$PDOInstance->beginTransaction();
+		return self::$_instance->beginTransaction();
 	}
         
 	/**
@@ -46,7 +50,7 @@ class sdb
 	 * @return bool
 	 */
 	public function commit() {
-		return self::$PDOInstance->commit();
+		return self::$_instance->commit();
 	}
 	
 	/**
@@ -55,7 +59,7 @@ class sdb
 	 * @return string 
 	 */
     public function errorCode() {
-    	return self::$PDOInstance->errorCode();
+    	return self::$_instance->errorCode();
     }
     
     /**
@@ -64,7 +68,7 @@ class sdb
      * @return array
      */
     public function errorInfo() {
-    	return self::$PDOInstance->errorInfo();
+    	return self::$_instance->errorInfo();
     }
     
     /**
@@ -73,7 +77,7 @@ class sdb
      * @param string $statement
      */
     public function exec($statement) {
-    	return self::$PDOInstance->exec($statement);
+    	return self::$_instance->exec($statement);
     }
     
     /**
@@ -83,7 +87,7 @@ class sdb
      * @return mixed
      */
     public function getAttribute($attribute) {
-    	return self::$PDOInstance->getAttribute($attribute);
+    	return self::$_instance->getAttribute($attribute);
     }
 
     /**
@@ -92,7 +96,7 @@ class sdb
      * @return array
      */
     public function getAvailableDrivers(){
-    	return Self::$PDOInstance->getAvailableDrivers();
+    	return Self::$_instance->getAvailableDrivers();
     }
     
     /**
@@ -102,7 +106,7 @@ class sdb
      * @return string
      */
 	public function lastInsertId($name) {
-		return self::$PDOInstance->lastInsertId($name);
+		return self::$_instance->lastInsertId($name);
 	}
         
    	/**
@@ -115,7 +119,7 @@ returned
      */
     public function prepare ($statement, $driver_options=false) {
     	if(!$driver_options) $driver_options=array();
-    	return self::$PDOInstance->prepare($statement, $driver_options);
+    	return self::$_instance->prepare($statement, $driver_options);
     }
     
     /**
@@ -125,7 +129,7 @@ returned
      * @return PDOStatement
      */
     public function query($statement) {
-    	return self::$PDOInstance->query($statement);
+    	return self::$_instance->query($statement);
     }
     
     /**
@@ -135,7 +139,7 @@ returned
      * @return array
      */
     public function queryFetchAllAssoc($statement) {
-    	return self::$PDOInstance->query($statement)->fetchAll(PDO::FETCH_ASSOC);
+    	return self::$_instance->query($statement)->fetchAll(PDO::FETCH_ASSOC);
     }
     
     /**
@@ -145,7 +149,7 @@ returned
      * @return array
      */
     public function queryFetchRowAssoc($statement) {
-    	return self::$PDOInstance->query($statement)->fetch(PDO::FETCH_ASSOC);    	
+    	return self::$_instance->query($statement)->fetch(PDO::FETCH_ASSOC);    	
     }
     
     /**
@@ -155,7 +159,7 @@ returned
      * @return mixed
      */
     public function queryFetchColAssoc($statement) {
-    	return self::$PDOInstance->query($statement)->fetchColumn();    	
+    	return self::$_instance->query($statement)->fetchColumn();    	
     }
     
     /**
@@ -166,7 +170,7 @@ returned
      * @return string
      */
     public function quote ($input, $parameter_type=0) {
-    	return self::$PDOInstance->quote($input, $parameter_type);
+    	return self::$_instance->quote($input, $parameter_type);
     }
     
     /**
@@ -175,7 +179,7 @@ returned
      * @return bool
      */
     public function rollBack() {
-    	return self::$PDOInstance->rollBack();
+    	return self::$_instance->rollBack();
     }      
     
     /**
@@ -186,7 +190,7 @@ returned
      * @return bool
      */
     public function setAttribute($attribute, $value  ) {
-    	return self::$PDOInstance->setAttribute($attribute, $value);
+    	return self::$_instance->setAttribute($attribute, $value);
     }
 }
 ?>

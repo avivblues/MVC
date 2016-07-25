@@ -3,7 +3,8 @@ class ccore{
 	protected $fpdo; 
 	public function __construct(){
 		$this->fpdo = cpdo::instance();
-		$qk = $this->fpdo->select("proc_mstr_menu","distinct(Group_menu)");
+		$qk = $this->fpdo->query("select distinct(Group_menu) from proc_mstr_menu");
+		print_r($qk);
 	}
 	protected function load($path,$data = false){
 		$path = realpath(__DIR__ . '/..')."/_view/$path.php";

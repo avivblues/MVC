@@ -11,7 +11,7 @@ if(defined('__NOT_DIRECT')){
 	*/
 	die('not authorized action!!');
 }
-class cpdo{
+class cpdo {
     protected static $_instance;
     final private function __construct() {}
     /*
@@ -25,7 +25,6 @@ class cpdo{
 			try {
 				self::$_instance = new PDO($dns,$cnfg['user'],$cnfg['pass']); 
 			 	self::$_instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				echo 'Connected </br>';
 	        } catch (PDOException $e) {
 	    		print "Error PDO : " . $e->getMessage() . "<br/>";die();
 			}
@@ -33,6 +32,11 @@ class cpdo{
 	    }
 	    return self::$_instance;
 	}
+	public static function run($sql, $args = []){
+        $stmt = $this->_instance->prepare($sql);
+        $stmt->execute($args);
+        return $stmt;
+    }
    	/*
     * Selects information from the database.
     */
@@ -54,11 +58,9 @@ class cpdo{
     /**
      *  clone will not duplicate object
     */
-    public function __clone() 
-    {
+    public function __clone(){
 
         die(__CLASS__ . ' class cant be instantiated.');
-
     }
 	/*
     * Insert values into the table
@@ -258,4 +260,5 @@ class cpdo{
 		return $this->result = json_encode($posts);
 	}
 }
+
 ?>
