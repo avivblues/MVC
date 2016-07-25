@@ -1,0 +1,22 @@
+Options +FollowSymlinks
+RewriteEngine On
+# If not Jquery
+#RewriteCond %{HTTP:X-Requested-With} !=XMLHttpRequest
+#RewriteCond %{HTTP:X-REQUESTED-WITH} !^(XMLHttpRequest)$
+
+
+#rewrite condition
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+
+# for Query String
+# RewriteCond %{QUERY_STRING} ^(.*)/(.*)$
+RewriteCond %{QUERY_STRING} ^(.*)$
+
+#untuk @prm jika lebih dari satu parameter, gunakan tanda (+) plus	
+#RewriteRule ^(.*)$ index.php?r=$1&fnc=%1&prm=%2 [L]
+RewriteRule ^(.*)$ index.php?r=$1&fnc=%1 [L]
+ # cara pakai : http://localhost:8080/coremvc/cmodel?page/vanggi
+
+
