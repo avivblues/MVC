@@ -2,6 +2,8 @@
 class chome extends ccore{
 	
 	public function index(){
+		$dataku= mcore:terbilang(100);
+		print_r($dataku);
 		$this->load("vhome");
 	}
 	public function showallmenu(){

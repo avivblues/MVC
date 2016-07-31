@@ -1,10 +1,6 @@
 <?php 
 class mcore{
 	protected $result;
-	protected $fpdo;
-	public function __construct(){
-		$this->fpdo = new crudpdo;
-	}
 	/* __set Function for magic method */
 	public function __set($property, $value){
 		if(property_exists($this,$property))$this->$property = $value;

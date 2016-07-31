@@ -1,1 +1,1 @@
-a:3:{s:5:"chome";s:48:"C:\xampp\htdocs\core_mvc/app/_controll/chome.php";s:5:"ccore";s:48:"C:\xampp\htdocs\core_mvc/app/_controll/ccore.php";s:4:"cpdo";s:44:"C:\xampp\htdocs\core_mvc/app/_model/cpdo.php";}
+a:4:{s:5:"chome";s:63:"D:\Home Project\LocalApps\core_mvc_apps/app/_controll/chome.php";s:5:"ccore";s:63:"D:\Home Project\LocalApps\core_mvc_apps/app/_controll/ccore.php";s:4:"cpdo";s:59:"D:\Home Project\LocalApps\core_mvc_apps/app/_model/cpdo.php";s:4:"spdo";s:59:"D:\Home Project\LocalApps\core_mvc_apps/app/_model/spdo.php";}

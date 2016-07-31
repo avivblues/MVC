@@ -22,7 +22,7 @@ class spdo
      
   	public function __construct() 
     {
-        if(!self::$_instance) { 
+        if(!self::$_instance) {
 	        try {
                 $cnfg = parse_ini_file("config/dbconfig.ini");
                 $dns = $cnfg['engine'].':host='.$cnfg['host'].';dbname='.$cnfg['database'];
@@ -128,7 +128,7 @@ returned
      * @param string $statement
      * @return PDOStatement
      */
-    public function query($statement) {
+    public function xquery($statement) {
     	return self::$_instance->query($statement);
     }
     

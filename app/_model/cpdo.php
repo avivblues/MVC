@@ -32,7 +32,7 @@ class cpdo {
 	    }
 	    return self::$_instance;
 	}
-	public static function run($sql, $args = []){
+	public function run($sql, $args = []){
         $stmt = $this->_instance->prepare($sql);
         $stmt->execute($args);
         return $stmt;
